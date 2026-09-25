@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Dashboard — IAS Training</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">
+            <span class="s1"></span>
+            <span class="s2"></span>
+            <span class="s3"></span>
+        </div>
+        <div class="logo-text">
+            <h1>IAS TRAINING</h1>
+            <p>Training and Development</p>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container wide-card">
+        <div class="card">
+            <h2>Welcome, <span id="userName"></span></h2>
+            <p class="dashboard-text">This is your personal training area</p>
+
+            <div class="user-badge">
+                <p><strong>Email:</strong> <span id="userEmail"></span></p>
+                <p style="margin-top:0.3rem; font-size:0.9rem; color:var(--light-gray);"><strong>Contact:</strong> <span id="userContact"></span></p>
+            </div>
+
+            <div class="file-section">
+                <h3>Your Training Files</h3>
+                
+                <!-- 📌 ADD NEW FILES HERE — Example format below -->
+                <!-- <a href="files/assessment.html" class="file-link">📋 Assessment Techniques</a> -->
+                <!-- <a href="files/qa.html" class="file-link">✅ Quality Assurance</a> -->
+                
+                <p class="empty-note">No files have been added yet.<br>Content will appear here as it's uploaded.</p>
+            </div>
+
+            <button class="secondary-btn" onclick="logout()">Sign Out</button>
+        </div>
+    </div>
+</main>
+
+<script src="script.js"></script>
+<script>
+requireAuth();
+const user = getCurrentUser();
+document.getElementById('userName').textContent = `${user.firstName} ${user.lastName}`;
+document.getElementById('userEmail').textContent = user.email;
+document.getElementById('userContact').textContent = user.contact;
+</script>
+</body>
+</html>
