@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Dashboard — IAS Training</title>
+    <title>Dashboard — IAS Training</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,27 +23,29 @@
 </header>
 
 <main>
-    <div class="container wide-card">
+    <div class="container wide-container">
         <div class="card">
             <h2>Welcome, <span id="userName"></span></h2>
-            <p class="dashboard-text">This is your personal training area</p>
+            <p class="subtitle dashboard-greeting">This is your personal training portal</p>
 
-            <div class="user-badge">
+            <div class="user-badge" id="userBadge">
                 <p><strong>Email:</strong> <span id="userEmail"></span></p>
-                <p style="margin-top:0.3rem; font-size:0.9rem; color:var(--light-gray);"><strong>Contact:</strong> <span id="userContact"></span></p>
+                <p style="margin-top:0.5rem;"><strong>Contact:</strong> <span id="userContact"></span></p>
+                <div id="adminBadge"></div>
             </div>
 
             <div class="file-section">
-                <h3>Your Training Files</h3>
+                <h3>📁 Your Training Files</h3>
                 
-                <!-- 📌 ADD NEW FILES HERE — Example format below -->
-                <!-- <a href="files/assessment.html" class="file-link">📋 Assessment Techniques</a> -->
-                <!-- <a href="files/qa.html" class="file-link">✅ Quality Assurance</a> -->
+                <!-- ==============================================
+                ADD NEW COURSES/FILES HERE — Just copy the line below
+                <a href="files/your-file.html" class="file-link">📋 Course Name</a>
+                ============================================== -->
                 
-                <p class="empty-note">No files have been added yet.<br>Content will appear here as it's uploaded.</p>
+                <p class="empty-state">No training files have been added yet.<br>Content will appear here as it's uploaded.</p>
             </div>
 
-            <button class="secondary-btn" onclick="logout()">Sign Out</button>
+            <button class="btn secondary-btn" onclick="logout()">Sign Out</button>
         </div>
     </div>
 </main>
@@ -52,9 +54,16 @@
 <script>
 requireAuth();
 const user = getCurrentUser();
+
 document.getElementById('userName').textContent = `${user.firstName} ${user.lastName}`;
 document.getElementById('userEmail').textContent = user.email;
 document.getElementById('userContact').textContent = user.contact;
+
+if (user.isAdmin) {
+    document.getElementById('userBadge').classList.add('admin-badge');
+    document.getElementById('adminBadge').innerHTML = 
+        '<span class="admin-tag">🔓 MASTER ADMIN — Full Access</span>';
+}
 </script>
 </body>
 </html>
