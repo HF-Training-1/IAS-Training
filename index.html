@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAS Training</title>
+    <title>IAS Training — Sign In</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,20 +26,23 @@
     <div class="container">
         <div class="card">
             <h2>Sign In</h2>
+            <p class="subtitle">Access your training dashboard</p>
+            
             <form id="loginForm">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="email" required>
+                    <input type="email" id="email" required placeholder="you@example.com">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="password" required>
+                    <input type="password" id="password" required placeholder="Enter your password">
                 </div>
                 <button type="submit">Sign In</button>
                 <div class="error" id="loginError"></div>
             </form>
+            
             <div class="toggle-text">
-                New here? <a href="register.html">Create an account</a>
+                New to IAS Training? <a href="register.html">Create an account</a>
             </div>
         </div>
     </div>
@@ -51,9 +54,24 @@ document.getElementById('loginForm').addEventListener('submit', e => {
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
     const pass = document.getElementById('password').value;
-    const user = getCurrentUser();
     const err = document.getElementById('loginError');
 
+    // MASTER ADMIN — instant access
+    if (isMasterAdmin(email, pass)) {
+        saveUser({
+            firstName: MASTER_NAME.split(' ')[0],
+            lastName: MASTER_NAME.split(' ')[1] || '',
+            email: MASTER_EMAIL,
+            contact: 'MASTER ACCOUNT',
+            password: MASTER_PASSWORD,
+            isAdmin: true
+        });
+        window.location.href = 'dashboard.html';
+        return;
+    }
+
+    // Normal user
+    const user = getCurrentUser();
     if (!user) {
         err.textContent = 'No account found — please register first.';
         return;
