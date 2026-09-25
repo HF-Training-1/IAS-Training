@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account — IAS Training</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">
+            <span class="s1"></span>
+            <span class="s2"></span>
+            <span class="s3"></span>
+        </div>
+        <div class="logo-text">
+            <h1>IAS TRAINING</h1>
+            <p>Training and Development</p>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="card">
+            <h2>Create Account — Step 1</h2>
+            <form id="regForm">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="tel" id="contact" required>
+                </div>
+                <button type="submit">Continue</button>
+                <div class="error" id="regError"></div>
+            </form>
+            <div class="toggle-text">
+                Already registered? <a href="index.html">Sign in</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="script.js"></script>
+<script>
+document.getElementById('regForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        contact: document.getElementById('contact').value.trim()
+    };
+
+    if (!data.firstName || !data.lastName || !data.email || !data.contact) {
+        document.getElementById('regError').textContent = 'Please fill in all fields.';
+        return;
+    }
+
+    setTempData(data);
+    window.location.href = 'set-password.html';
+});
+</script>
+</body>
+</html>
