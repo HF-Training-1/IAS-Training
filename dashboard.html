@@ -5,6 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — IAS Training</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-section {
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .dropdown-toggle {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .dropdown-toggle:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .dropdown-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-open .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: rgba(0,0,0,0.15);
+        }
+
+        .dropdown-content.show {
+            max-height: 1000px;
+        }
+
+        .dropdown-inner {
+            padding: 1rem 1.5rem 1.5rem;
+        }
+
+        .price-card {
+            background: rgba(74,74,74,0.2);
+            padding: 1.2rem;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+            border-left: 3px solid var(--steel);
+        }
+
+        .price-card .amount {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0.5rem 0;
+        }
+
+        .price-card .desc {
+            color: var(--silver);
+            font-size: 0.9rem;
+        }
+
+        .form-row {
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.95rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            background: rgba(74,74,74,0.3);
+            color: var(--white);
+            font-size: 1rem;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--silver);
+            box-shadow: 0 0 0 3px rgba(140,140,140,0.15);
+        }
+
+        .success-msg {
+            display: none;
+            color: #90ee90;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(60,140,60,0.1);
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 
@@ -26,7 +130,7 @@
     <div class="container wide-container">
         <div class="card">
             <h2>Welcome, <span id="userName"></span></h2>
-            <p class="subtitle dashboard-greeting">This is your personal training portal</p>
+            <p class="subtitle dashboard-greeting">Your personal training portal</p>
 
             <div class="user-badge" id="userBadge">
                 <p><strong>Email:</strong> <span id="userEmail"></span></p>
@@ -34,15 +138,94 @@
                 <div id="adminBadge"></div>
             </div>
 
-            <div class="file-section">
-                <h3>📁 Your Training Files</h3>
-                
-                <!-- ==============================================
-                ADD NEW COURSES/FILES HERE — Just copy the line below
-                <a href="files/your-file.html" class="file-link">📋 Course Name</a>
-                ============================================== -->
-                
-                <p class="empty-state">No training files have been added yet.<br>Content will appear here as it's uploaded.</p>
+            <!-- 📚 COURSES DROPDOWN -->
+            <div class="dashboard-section">
+                <button class="dropdown-toggle" id="coursesToggle">
+                    📚 Courses & Training
+                    <span class="dropdown-icon">▼</span>
+                </button>
+                <div class="dropdown-content" id="coursesContent">
+                    <div class="dropdown-inner">
+                        <a href="texture-scissors.pdf" class="file-link" target="_blank">
+                            ✂️ Modern Texture & Scissor Techniques
+                        </a>
+                        <a href="advanced-fade.pdf" class="file-link" target="_blank">
+                            📐 Advanced Fade System
+                        </a>
+                        <a href="taper-specialist.pdf" class="file-link" target="_blank">
+                            🔍 Taper Specialist
+                        </a>
+                        <a href="modern-mens-styling.pdf" class="file-link" target="_blank">
+                            💇 Modern Men's Styling
+                        </a>
+                        <a href="advanced-beard-design.pdf" class="file-link" target="_blank">
+                            🧔 Advanced Beard Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 💰 PRICING DROPDOWN -->
+            <div class="dashboard-section">
+                <button class="dropdown-toggle" id="pricingToggle">
+                    💰 Prices & Investment
+                    <span class="dropdown-icon">▼</span>
+                </button>
+                <div class="dropdown-content" id="pricingContent">
+                    <div class="dropdown-inner">
+                        <div class="price-card">
+                            <strong>Individual Course Access</strong>
+                            <div class="amount">£49.00</div>
+                            <div class="desc">One course — lifetime access, digital download</div>
+                        </div>
+                        <div class="price-card">
+                            <strong>Complete Series — All 5 Courses</strong>
+                            <div class="amount">£199.00</div>
+                            <div class="desc">Full professional package — save over 20%</div>
+                        </div>
+                        <div class="price-card">
+                            <strong>1-to-1 Mentoring Session</strong>
+                            <div class="amount">£120.00</div>
+                            <div class="desc">60 mins personalised coaching — contact to book</div>
+                        </div>
+                        <p style="margin-top:1rem; color:var(--silver); font-size:0.9rem;">
+                            💡 Edit prices above to match your actual rates anytime
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🤖 INQUIRY DROPDOWN -->
+            <div class="dashboard-section">
+                <button class="dropdown-toggle" id="inquiryToggle">
+                    🤖 AI Inquiry / Contact Us
+                    <span class="dropdown-icon">▼</span>
+                </button>
+                <div class="dropdown-content" id="inquiryContent">
+                    <div class="dropdown-inner">
+                        <p style="margin-bottom:1rem; color:var(--pale-silver);">
+                            Have a question or want to book? Send us a message and we'll get back to you.
+                        </p>
+                        <form id="inquiryForm">
+                            <div class="form-row">
+                                <label>Your Name</label>
+                                <input type="text" id="inqName" required placeholder="Your full name">
+                            </div>
+                            <div class="form-row">
+                                <label>Email / Phone</label>
+                                <input type="text" id="inqContact" required placeholder="Email or phone number">
+                            </div>
+                            <div class="form-row">
+                                <label>Your Message</label>
+                                <textarea id="inqMessage" required placeholder="Tell us what you're looking for — courses, pricing, mentoring, or anything else..."></textarea>
+                            </div>
+                            <button type="submit" class="btn">Send Inquiry</button>
+                            <div class="success-msg" id="successMsg">
+                                ✅ Message sent! We'll be in touch shortly.
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <button class="btn secondary-btn" onclick="logout()">Sign Out</button>
@@ -64,6 +247,55 @@ if (user.isAdmin) {
     document.getElementById('adminBadge').innerHTML = 
         '<span class="admin-tag">🔓 MASTER ADMIN — Full Access</span>';
 }
+
+// Dropdown Logic
+function setupDropdown(toggleId, contentId) {
+    const toggle = document.getElementById(toggleId);
+    const content = document.getElementById(contentId);
+    
+    toggle.addEventListener('click', () => {
+        toggle.parentElement.classList.toggle('dropdown-open');
+        content.classList.toggle('show');
+    });
+}
+
+setupDropdown('coursesToggle', 'coursesContent');
+setupDropdown('pricingToggle', 'pricingContent');
+setupDropdown('inquiryToggle', 'inquiryContent');
+
+// Auto-fill form
+document.getElementById('inqName').value = `${user.firstName} ${user.lastName}`;
+document.getElementById('inqContact').value = user.email + (user.contact ? ` / ${user.contact}` : '');
+
+// Form Submit — YOUR EMAIL ALREADY SET ✅
+document.getElementById('inquiryForm').addEventListener('submit', e => {
+    e.preventDefault();
+    
+    const name = document.getElementById('inqName').value;
+    const contact = document.getElementById('inqContact').value;
+    const message = document.getElementById('inqMessage').value;
+
+    const emailSubject = encodeURIComponent(`IAS Training Inquiry from ${name}`);
+    const emailBody = encodeURIComponent(
+        `NEW INQUIRY RECEIVED\n\n` +
+        `From: ${name}\n` +
+        `Contact: ${contact}\n` +
+        `User Email: ${user.email}\n\n` +
+        `--- MESSAGE ---\n\n${message}`
+    );
+
+    // ✅ YOUR EMAIL IS HERE — shane.ace@hotmail.com
+    const yourEmail = "shane.ace@hotmail.com";
+    
+    window.location.href = `mailto:${yourEmail}?subject=${emailSubject}&body=${emailBody}`;
+    
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('inqMessage').value = '';
+    
+    setTimeout(() => {
+        document.getElementById('successMsg').style.display = 'none';
+    }, 5000);
+});
 </script>
 </body>
 </html>
